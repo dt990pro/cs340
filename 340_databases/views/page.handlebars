@@ -1,0 +1,160 @@
+<h1>Page</h1>
+{{#each foo}}
+{{this}}
+{{/each}}
+<table>
+	<thead> 
+        <th>Name</th> 
+        <th>Job</th> 
+        <th>NextJobId</th>
+        <th>Skill</th>
+		<th>Weapon</th>  
+    </thead> 
+	
+	<tbody> 
+        {{#each player_info}} 
+        <tr> 
+            <td>{{playername}}</td> 
+			<td>{{playerjob}}</td> 
+			<td>{{nextjobid}}</td> 
+			<td>{{playerskill}}</td> 
+			<td>{{playerweapon}}</td> 
+        </tr> 
+        {{/each}} 
+    </tbody> 
+	
+	<form id="add" action="/page" method="post">
+    Player Name: <input type="text" name="pname">
+    
+	Job: <select name="jname"> 
+        {{#each jobs}}
+        <option value="{{name}}">{{name}}</option>
+        {{/each}}
+    </select>
+	
+    <input type="submit" value="Submit">
+    </form><br>
+	
+	<form id="add" action="/page/weapon" method="post">
+		Player: <select name="pid"> 
+			{{#each player}}
+			<option value="{{pid}}">{{name}}</option>
+			{{/each}}
+			</select>
+	
+		Weapon: <select name="wid"> 
+        {{#each weapon}}
+        <option value="{{wid}}">{{name}}</option>
+        {{/each}}
+		</select>
+		
+		
+	<input type="submit" value="Submit">
+	</form><br>
+	
+	<h2>Hint: no skill no wand!!! has skill must wand!!!</h2>
+	
+</table>
+
+<h2>---Select a player to look at weapons</h2>
+<table>
+	<form id="add" action="/page/show_p_weapon" method="post">
+	SELECT p.name, w.name FROM player p LEFT JOIN player_weapon pw ON p.pid=pw.pid LEFT JOIN weapon w ON pw.wid=w.wid WHERE p.name= <input type="text" name="selected_pname">
+	<input type="submit" value="Submit">
+	</form><br>
+	
+	<thead> 
+        <th>Name</th> 
+		<th>Weapon</th>  
+    </thead> 
+	
+	<tbody> 
+        {{#each selected_player}} 
+        <tr> 
+            <td>{{TheName}}</td> 
+			<td>{{Weapons}}</td> 
+        </tr> 
+        {{/each}} 
+    </tbody> 
+<table>
+
+<h2>---List players of a job</h2>
+<table>
+	<form id="add" action="/page/show_p_of_job" method="post">
+	SELECT j.name, p.name FROM job j INNER JOIN player p ON j.pid=p.pid WHERE j.name= <select name="selected_jname"> 
+        {{#each jobs}}
+        <option value="{{name}}">{{name}}</option>
+        {{/each}}
+		</select>
+		
+	<input type="submit" value="Submit">
+	</form><br>
+	
+	<thead> 
+        <th>Job</th> 
+		<th>Player</th>  
+    </thead> 
+	
+	<tbody> 
+        {{#each selected_job}} 
+        <tr> 
+            <td>{{TheName}}</td> 
+			<td>{{Player}}</td> 
+        </tr> 
+        {{/each}} 
+    </tbody> 
+<table>
+
+<h2>---PLAYER_WEAPON for delete and update</h2>
+<table>
+	<thead>
+		<th>PID</th> 
+		<th>WID</th> 
+	</thead>
+
+	<tbody>
+		{{#each player_weapon}} 
+        <tr> 
+			<td>{{pid}}</td> 
+			<td>{{wid}}</td> 
+			<td><button onclick="deletePerson({{pwid}})">Delete</button></td>
+            <td><a href="/page/{{pwid}}">Update</a></td>
+        </tr> 
+        {{/each}} 
+	</tbody>
+</table>
+
+<h1>Following shows some table INFO to check.</h1>
+<h2>---Player</h2>
+<table>
+	<thead>
+		<th>PID</th> 
+        <th>Name</th> 
+	</thead>
+
+	<tbody>
+		{{#each player}} 
+        <tr> 
+            <td>{{pid}}</td> 
+			<td>{{name}}</td> 
+        </tr> 
+        {{/each}} 
+	</tbody>
+</table>
+
+<h2>---Upgrade</h2>
+<table>
+	<thead>
+		<th>Job</th> 
+        <th>Next Job</th> 
+	</thead>
+
+	<tbody>
+		{{#each upgrade}} 
+        <tr> 
+            <td>{{jid}}</td> 
+			<td>{{jid_up}}</td> 
+        </tr> 
+        {{/each}} 
+	</tbody>
+</table>

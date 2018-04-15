@@ -1,0 +1,12 @@
+<h1>Update weapon :</h1>
+<form id="update-weapon" action="/page" method="post">
+   
+    weapon:<select name="wid" id="weapon-selector"> 
+        {{#each weapon}}
+        <option value="{{wid}}">{{name}}</option>
+        {{/each}}
+    </select><br>
+    
+</form>
+<button onclick="updateweapon({{one_player_weapon.pwid}})">Update</button>
+<script defer>selectWeapon({{one_player_weapon.wid}});</script>
